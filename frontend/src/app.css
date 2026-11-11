@@ -141,6 +141,10 @@
   margin-left: 16rem;
 }
 
+.page[data-navigation-mode='hybrid'] > .app-header {
+  margin-left: 16rem;
+}
+
 .page[data-navigation-mode='vertical'][data-sidebar-mode='folded'] .app-sidebar,
 .page[data-navigation-mode='hybrid'][data-sidebar-mode='folded'] .app-sidebar,
 .page[data-navigation-mode='vertical'][data-sidebar-mode='folded-hover'] .app-sidebar,
@@ -152,6 +156,11 @@
 .page[data-navigation-mode='hybrid'][data-sidebar-mode='folded'] > .page-wrapper,
 .page[data-navigation-mode='vertical'][data-sidebar-mode='folded-hover'] > .page-wrapper,
 .page[data-navigation-mode='hybrid'][data-sidebar-mode='folded-hover'] > .page-wrapper {
+  margin-left: 4.5rem;
+}
+
+.page[data-navigation-mode='hybrid'][data-sidebar-mode='folded'] > .app-header,
+.page[data-navigation-mode='hybrid'][data-sidebar-mode='folded-hover'] > .app-header {
   margin-left: 4.5rem;
 }
 
@@ -453,6 +462,10 @@
   .page[data-navigation-mode='hybrid'][data-sidebar-mode='folded'] > .page-wrapper,
   .page[data-navigation-mode='vertical'][data-sidebar-mode='folded-hover'] > .page-wrapper,
   .page[data-navigation-mode='hybrid'][data-sidebar-mode='folded-hover'] > .page-wrapper {
+    margin-left: 0;
+  }
+
+  .page[data-navigation-mode='hybrid'] > .app-header {
     margin-left: 0;
   }
 
