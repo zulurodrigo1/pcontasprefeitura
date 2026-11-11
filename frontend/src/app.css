@@ -461,3 +461,148 @@
     top: auto;
   }
 }
+
+.login-page {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--tblr-primary) 8%, transparent), transparent 55%),
+    var(--tblr-bg-surface-secondary);
+}
+
+.login-container {
+  width: min(100%, 28rem);
+}
+
+.login-brand {
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.login-brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--tblr-body-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-brand-icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 0.8rem;
+  background: var(--tblr-primary-lt);
+  color: var(--tblr-primary);
+}
+
+.login-card {
+  border-color: var(--tblr-border-color);
+  box-shadow: var(--tblr-box-shadow-card);
+}
+
+.login-heading {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-heading p {
+  margin: 0;
+}
+
+.login-recovery {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--tblr-primary);
+  font-size: var(--tblr-font-size-sm);
+  text-decoration: none;
+}
+
+.login-recovery:hover {
+  text-decoration: underline;
+}
+
+.login-password-toggle {
+  display: grid;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--tblr-secondary);
+  place-items: center;
+}
+
+.login-password-toggle:hover {
+  color: var(--tblr-body-color);
+}
+
+.login-eye-hide,
+.login-password-toggle[aria-pressed='true'] .login-eye-show {
+  display: none;
+}
+
+.login-password-toggle[aria-pressed='true'] .login-eye-hide {
+  display: block;
+}
+
+.login-remember {
+  margin-top: 0.75rem;
+}
+
+.login-feedback {
+  margin-top: 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--tblr-border-color);
+  border-radius: var(--tblr-border-radius);
+  background: var(--tblr-bg-surface-secondary);
+  color: var(--tblr-secondary);
+  font-size: var(--tblr-font-size-sm);
+}
+
+.login-feedback[hidden] {
+  display: none;
+}
+
+.login-demo-credentials {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px dashed var(--tblr-border-color);
+  border-radius: var(--tblr-border-radius);
+  background: var(--tblr-bg-surface);
+  color: var(--tblr-body-color);
+  font-size: var(--tblr-font-size-sm);
+}
+
+.login-demo-credentials code {
+  margin-left: 0.25rem;
+}
+
+.login-demo-credentials small {
+  color: var(--tblr-secondary);
+}
+
+.login-footnote {
+  margin: 1rem 0 0;
+  color: var(--tblr-secondary);
+  font-size: var(--tblr-font-size-sm);
+  text-align: center;
+}
+
+@media (max-width: 575.98px) {
+  .login-page {
+    padding: 1.5rem 1rem;
+  }
+
+  .login-brand {
+    margin-bottom: 1.25rem;
+  }
+}
