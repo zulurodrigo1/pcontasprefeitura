@@ -1,4 +1,5 @@
 import './app.css'
+import { clearAuthToken, login, logout, saveAuthToken } from './api/client'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 const demoCredentials = {
@@ -264,9 +265,17 @@ function initializeDashboard(): void {
   })
 
   document.querySelectorAll<HTMLElement>('#demo-logout, [data-demo-logout]').forEach((logoutLink) => {
-    logoutLink.addEventListener('click', (event) => {
+    logoutLink.addEventListener('click', async (event) => {
       event.preventDefault()
-      window.location.reload()
+
+      try {
+        await logout()
+      } catch {
+        // Fallback silencioso quando a API não estiver disponível.
+      } finally {
+        clearAuthToken()
+        window.location.reload()
+      }
     })
   })
 
@@ -360,23 +369,31 @@ passwordToggle.addEventListener('click', () => {
 const loginFeedback = document.querySelector<HTMLDivElement>('#login-feedback')!
 const loginForm = document.querySelector<HTMLFormElement>('#login-form')!
 
-loginForm.addEventListener('submit', (event) => {
+loginForm.addEventListener('submit', async (event) => {
   event.preventDefault()
   const formData = new FormData(loginForm)
   const email = String(formData.get('email') ?? '')
   const password = String(formData.get('password') ?? '')
 
-  if (import.meta.env.DEV && email === demoCredentials.email && password === demoCredentials.password) {
+  loginFeedback.textContent = 'Autenticando...'
+  loginFeedback.hidden = false
+
+  try {
+    const response = await login(email, password)
+    saveAuthToken(response.data.token)
     document.title = 'Painel principal | Portal de Prestação de Contas'
     app.innerHTML = renderDashboardMarkup()
     initializeDashboard()
-    return
-  }
+  } catch (error) {
+    const message = error instanceof Error && error.message
+      ? error.message
+      : import.meta.env.DEV
+        ? 'E-mail ou senha de demonstração incorretos.'
+        : 'O serviço de autenticação ainda não está conectado.'
 
-  loginFeedback.textContent = import.meta.env.DEV
-    ? 'E-mail ou senha de demonstração incorretos.'
-    : 'O serviço de autenticação ainda não está conectado.'
-  loginFeedback.hidden = false
+    loginFeedback.textContent = message
+    loginFeedback.hidden = false
+  }
 })
 
 document.querySelector<HTMLButtonElement>('[data-login-notice]')!.addEventListener('click', (event) => {
