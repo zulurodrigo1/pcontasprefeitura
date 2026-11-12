@@ -1,0 +1,16 @@
+[2026-11-11 23:19:53] local.ERROR: The "--compact" option does not exist. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\RuntimeException(code: 0): The \"--compact\" option does not exist. at D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Input/ArgvInput.php:226)
+[stacktrace]
+#0 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Input/ArgvInput.php(155): Symfony/Component/Console/Input/ArgvInput->addLongOption('compact', NULL)
+#1 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Input/ArgvInput.php(88): Symfony/Component/Console/Input/ArgvInput->parseLongOption('--compact')
+#2 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Input/ArgvInput.php(77): Symfony/Component/Console/Input/ArgvInput->parseToken('--compact', true)
+#3 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Input/Input.php(53): Symfony/Component/Console/Input/ArgvInput->parse()
+#4 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Command/Command.php(238): Symfony/Component/Console/Input/Input->bind(Object(Symfony/Component/Console/Input/InputDefinition))
+#5 D:/Projetos/github/pcontasprefeitura/api/vendor/laravel/framework/src/Illuminate/Console/Command.php(261): Symfony/Component/Console/Command/Command->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Laravel/Pao/Laravel/PaoOutputStyle))
+#6 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Application.php(1154): Illuminate/Console/Command->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#7 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Application.php(380): Symfony/Component/Console/Application->doRunCommand(Object(Illuminate/Foundation/Console/RouteListCommand), Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#8 D:/Projetos/github/pcontasprefeitura/api/vendor/symfony/console/Application.php(219): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#9 D:/Projetos/github/pcontasprefeitura/api/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(205): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#10 D:/Projetos/github/pcontasprefeitura/api/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1243): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#11 D:/Projetos/github/pcontasprefeitura/api/artisan(16): Illuminate/Foundation/Application->handleCommand(Object(Symfony/Component/Console/Input/ArgvInput))
+#12 {main}
+"} 

@@ -1,0 +1,152 @@
+(function(){let e=document.createElement(`link`).relList;if(e&&e.supports&&e.supports(`modulepreload`))return;for(let e of document.querySelectorAll(`link[rel="modulepreload"]`))n(e);new MutationObserver(e=>{for(let t of e)if(t.type===`childList`)for(let e of t.addedNodes)e.tagName===`LINK`&&e.rel===`modulepreload`&&n(e)}).observe(document,{childList:!0,subtree:!0});function t(e){let t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),t.credentials=e.crossOrigin===`use-credentials`?`include`:e.crossOrigin===`anonymous`?`omit`:`same-origin`,t}function n(e){if(e.ep)return;e.ep=!0;let n=t(e);fetch(e.href,n)}})();var e=`http://localhost:8000`;function t(){return localStorage.getItem(`portal-token`)}async function n(n,r={}){let i=t(),a=new Headers(r.headers);i&&a.set(`Authorization`,`Bearer ${i}`),!a.has(`Content-Type`)&&r.body&&!(r.body instanceof FormData)&&a.set(`Content-Type`,`application/json`);let o=await fetch(`${e}${n}`,{...r,headers:a,credentials:`include`}),s=await o.json().catch(()=>({}));if(!o.ok){let e=typeof s?.message==`string`?s.message:`Não foi possível concluir a requisição.`;throw Error(e)}return s}function r(e){localStorage.setItem(`portal-token`,e)}function i(){localStorage.removeItem(`portal-token`)}async function a(e,t){return n(`/api/login`,{method:`POST`,body:JSON.stringify({email:e,password:t})})}async function o(){return n(`/api/logout`,{method:`POST`})}var s=document.querySelector(`#app`);function c(e,t,n,r,i,a=3){return`<div class="setting-group" data-theme-setting="${e}" role="group" aria-labelledby="setting-label-${e}">
+    <div class="form-label mb-1" id="setting-label-${e}">${t}</div><div class="form-text mb-3">${n}</div>
+    <div class="row g-3">${r.map(({value:t,label:n})=>`<div class="col-${12/a}"><label class="form-imagecheck w-100">
+      <input type="radio" name="${e}" value="${t}" class="form-imagecheck-input" aria-label="${n}">
+      <span class="form-imagecheck-figure p-1">${i(t)}<span class="form-imagecheck-caption">${n}</span></span>
+    </label></div>`).join(``)}</div>
+  </div>`}function l(){return`<div class="setting-group" role="group" aria-labelledby="setting-label-theme-primary">
+    <div class="form-label mb-1" id="setting-label-theme-primary">Cor de destaque</div><div class="form-text mb-3">A cor de ênfase usada na interface.</div>
+    <div class="d-flex flex-wrap gap-2">${[`blue`,`azure`,`indigo`,`purple`,`pink`,`red`,`orange`,`yellow`,`lime`,`green`,`teal`,`cyan`,`inverted`].map(e=>`<label class="form-colorinput"><input type="radio" name="theme-primary" value="${e}" class="form-colorinput-input" aria-label="${e}"><span class="form-colorinput-color bg-${e}"></span></label>`).join(``)}</div>
+  </div>`}var u=[{value:`auto`,label:`Automático`},{value:`light`,label:`Claro`},{value:`dark`,label:`Escuro`},{value:`dark-nav`,label:`Navegação escura`},{value:`colored`,label:`Colorido`}],d=[`slate`,`gray`,`zinc`,`neutral`,`stone`,`mist`].map(e=>({value:e,label:e[0].toUpperCase()+e.slice(1)})),f=[`0`,`0.5`,`1`,`1.5`,`2`].map((e,t)=>({value:e,label:[`Sem raio`,`Pequeno`,`Padrão`,`Grande`,`Extra grande`][t]})),p=[`sans-serif`,`serif`,`monospace`,`comic`].map(e=>({value:e,label:e===`comic`?`Comic`:e})),m=e=>`<svg class="setting-preview-image" viewBox="0 0 96 64" aria-hidden="true"><rect x=".5" y=".5" width="95" height="63" rx="6" fill="var(--tblr-bg-surface-secondary)" stroke="var(--tblr-border-color)"/><rect x="8" y="8" width="80" height="12" rx="3" fill="var(--tblr-primary)"/><rect x="10" y="29" width="50" height="5" rx="2.5" fill="var(--tblr-border-color)"/><rect x="10" y="40" width="70" height="5" rx="2.5" fill="var(--tblr-border-color)"/><rect x="10" y="51" width="30" height="5" rx="2.5" fill="var(--tblr-border-color)"/><text x="80" y="59" text-anchor="end" font-size="6" fill="var(--tblr-secondary)">${e}</text></svg>`;function h(){let e=c(`scheme`,`Esquema de cores`,`A página e a navegação em uma só escolha.`,u,e=>`<span class="scheme-preview scheme-preview-${e}" aria-hidden="true"><i></i><i></i><i></i><i class="scheme-lines"></i></span>`),t=c(`theme-font`,`Família tipográfica`,`A tipografia usada em toda a interface.`,p,e=>`<span class="font-preview font-preview-${e}" aria-hidden="true">Aa</span>`),n=c(`theme-base`,`Paleta neutra`,`A paleta cinza usada nos planos de fundo.`,d,e=>`<svg class="setting-preview-image" viewBox="0 0 96 64" data-bs-theme-base="${e}" aria-hidden="true"><rect x=".5" y=".5" width="95" height="63" rx="6" fill="var(--tblr-bg-surface)" stroke="var(--tblr-border-color)"/>${[100,300,500,700,900].map((e,t)=>`<rect x="${10+t*16}" y="24" width="12" height="16" rx="3" fill="var(--tblr-gray-${e})"/>`).join(``)}</svg>`),r=c(`theme-radius`,`Arredondamento dos cantos`,`Ajuste o formato dos componentes.`,f,e=>`<svg class="setting-preview-image" viewBox="0 0 96 64" aria-hidden="true"><rect x=".5" y=".5" width="95" height="63" rx="6" fill="var(--tblr-bg-surface-secondary)" stroke="var(--tblr-border-color)"/><rect x="28" y="12" width="40" height="40" rx="${Number(e)*10}" fill="var(--tblr-primary)"/></svg>`),i=c(`navbar-position`,`Navegação`,`Escolha a composição do menu principal.`,[{value:`horizontal`,label:`Navbar`},{value:`vertical`,label:`Sidebar`},{value:`hybrid`,label:`Navbar + sidebar`}],e=>`<svg class="setting-preview-image" viewBox="0 0 96 64" aria-hidden="true"><rect x=".5" y=".5" width="95" height="63" rx="6" fill="var(--tblr-bg-surface-secondary)" stroke="var(--tblr-border-color)"/>${e===`vertical`?``:`<rect x="1" y="1" width="94" height="14" rx="5" fill="var(--tblr-primary)"/><rect x="8" y="6" width="13" height="4" rx="2" fill="rgba(255,255,255,.8)"/><rect x="27" y="6" width="13" height="4" rx="2" fill="rgba(255,255,255,.65)"/>`}${e===`horizontal`?``:`<rect x="1" y="${e===`hybrid`?`15`:`1`}" width="24" height="${e===`hybrid`?`48`:`62`}" rx="${e===`hybrid`?`0`:`5`}" fill="var(--tblr-primary)"/><rect x="6" y="${e===`hybrid`?`23`:`10`}" width="14" height="4" rx="2" fill="rgba(255,255,255,.8)"/><rect x="6" y="${e===`hybrid`?`33`:`20`}" width="14" height="4" rx="2" fill="rgba(255,255,255,.65)"/><rect x="6" y="${e===`hybrid`?`43`:`30`}" width="14" height="4" rx="2" fill="rgba(255,255,255,.65)"/>`}<rect x="${e===`vertical`||e===`hybrid`?`34`:`9`}" y="${e===`vertical`?`12`:e===`hybrid`?`23`:`25`}" width="${e===`horizontal`?`70`:`54`}" height="5" rx="2.5" fill="var(--tblr-border-color)"/><rect x="${e===`vertical`||e===`hybrid`?`34`:`9`}" y="${e===`vertical`?`23`:e===`hybrid`?`34`:`36`}" width="${e===`horizontal`?`48`:`42`}" height="5" rx="2.5" fill="var(--tblr-border-color)"/></svg>`),a=c(`layout`,`Largura do conteúdo`,`Defina a largura da área de conteúdo.`,[{value:`default`,label:`Padrão`},{value:`fluid`,label:`Fluido`},{value:`boxed`,label:`Em caixa`}],e=>m(e)),o=(e,t,n,r)=>c(e,t,n,r,e=>m(e),r.length===2?2:3);return`<div class="settings">
+    <button type="button" class="btn btn-floating btn-icon btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-settings" aria-controls="offcanvas-settings" aria-label="Personalizar">✎</button>
+    <form class="offcanvas offcanvas-end offcanvas-floating" tabindex="-1" id="offcanvas-settings" aria-modal="true" role="dialog" aria-labelledby="offcanvas-settings-title">
+      <button type="button" class="btn-close position-absolute top-0 end-0 m-3 z-1" data-bs-dismiss="offcanvas" aria-label="Fechar configurações"></button>
+      <div class="offcanvas-body p-0">
+        <section class="settings-intro p-4 text-center border-bottom"><img class="settings-illustration mb-3" src="/tabler/static/illustrations/light/computer-fix.png" alt=""/><h2 class="offcanvas-title mb-1" id="offcanvas-settings-title">Personalize o Tabler</h2><p class="text-secondary m-0">Escolha o visual e o layout. Suas preferências são salvas neste navegador.</p></section>
+        <section class="p-4 border-bottom"><h3 class="subheader mb-3">Aparência</h3><div class="settings-groups">
+          ${e}${l()}${t}${n}${r}
+        </div></section>
+        <section class="p-4"><h3 class="subheader mb-3">Layout</h3><div class="settings-groups">
+          ${i}${a}
+          ${o(`navbar`,`Comportamento da navegação`,`Mantenha a barra visível ao rolar a página.`,[{value:`default`,label:`Padrão`},{value:`sticky`,label:`Fixa`}])}
+          ${o(`navbar-style`,`Estilo da navegação`,`Acople a navegação ou deixe-a flutuante.`,[{value:`default`,label:`Acoplada`},{value:`floating`,label:`Flutuante`}])}
+          ${o(`navbar-theme`,`Tema da navegação`,`Escolha o esquema visual da barra.`,[{value:`default`,label:`Padrão`},{value:`dark`,label:`Escuro`},{value:`primary`,label:`Colorido`}])}
+          ${o(`offcanvas-style`,`Painéis laterais`,`Acople os painéis ou use o estilo flutuante.`,[{value:`default`,label:`Acoplado`},{value:`floating`,label:`Flutuante`}])}
+          ${o(`sidebar`,`Barra lateral`,`Escolha como a barra lateral se comporta.`,[{value:`default`,label:`Expandida`},{value:`folded`,label:`Recolhida`},{value:`folded-hover`,label:`Ao passar o mouse`}])}
+        </div></section>
+      </div>
+      <div class="offcanvas-footer border-top space-y-2"><button type="button" class="btn w-100" id="reset-theme-settings">↻ &nbsp; Restaurar configurações</button><button type="button" class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Salvar alterações</button></div>
+    </form>
+  </div>`}function g(){return`
+    <div class="page">
+      <header class="navbar navbar-expand-md d-print-none app-header">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
+          <h1 class="navbar-brand navbar-brand-autodark pe-0 pe-md-3"><a class="text-decoration-none" href="/">Portal de Prestação de Contas</a></h1>
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="nav-item header-settings-action"><button type="button" class="nav-link px-2 border-0 bg-transparent" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-settings" aria-controls="offcanvas-settings" aria-label="Abrir configurações"><span class="nav-link-icon d-md-none d-lg-inline-block" aria-hidden="true">⚙</span><span class="d-none d-md-inline">Configurações</span></button></div>
+            <div class="nav-item dropdown"><a class="nav-link px-2" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-label="Abrir menu do usuário"><span class="avatar avatar-sm bg-primary-lt">A</span><span class="d-none d-lg-inline ms-2">Administrador</span></a><div class="dropdown-menu dropdown-menu-end"><span class="dropdown-header">Administrador</span><a class="dropdown-item" href="#usuario">Minha conta</a><a class="dropdown-item" href="#configuracoes">Preferências</a><a class="dropdown-item" href="#logout" id="demo-logout">LogOut</a></div></div>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-menu">
+            <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center"><ul class="navbar-nav">
+              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false"><span class="nav-link-title">Prestação de Contas</span></a><div class="dropdown-menu"><a class="dropdown-item" href="#termo-fomento">Termo Fomento</a><a class="dropdown-item" href="#termo-colaboracao">Termo de Colaboração</a><a class="dropdown-item" href="#acordo-cooperacao">Acordo de Cooperação</a></div></li>
+              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false"><span class="nav-link-title">Organização</span></a><div class="dropdown-menu"><a class="dropdown-item" href="#dados-instituicao">Dados da Instituição</a><a class="dropdown-item" href="#usuario">Usuário</a><a class="dropdown-item" href="#permissao">Permissão</a></div></li>
+            </ul></div>
+          </div>
+        </div>
+      </header>
+      <aside class="navbar navbar-vertical navbar-expand-lg app-sidebar" id="app-sidebar" aria-label="Navegação lateral">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="true" aria-label="Alternar menu lateral"><span class="navbar-toggler-icon"></span></button>
+          <div class="navbar-brand navbar-brand-autodark"><a href="/" aria-label="Portal de Prestação de Contas"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="32" height="32" aria-hidden="true" class="navbar-brand-image"><path d="M64.6 16.2C63 9.9 58.1 5 51.8 3.4 40 1.5 28 1.5 16.2 3.4 9.9 5 5 9.9 3.4 16.2 1.5 28 1.5 40 3.4 51.8 5 58.1 9.9 63 16.2 64.6c11.8 1.9 23.8 1.9 35.6 0C58.1 63 63 58.1 64.6 51.8c1.9-11.8 1.9-23.8 0-35.6zM33.3 36.3c-2.8 4.4-6.6 8.2-11.1 11-1.5.9-3.3.9-4.8.1s-2.4-2.3-2.5-4c0-1.7.9-3.3 2.4-4.1 2.3-1.4 4.4-3.2 6.1-5.3-1.8-2.1-3.8-3.8-6.1-5.3-2.3-1.3-3-4.2-1.7-6.4s4.3-2.9 6.5-1.6c4.5 2.8 8.2 6.5 11.1 10.9 1 1.4 1 3.3.1 4.7zM49.2 46H37.8c-2.1 0-3.8-1-3.8-3s1.7-3 3.8-3h11.4c2.1 0 3.8 1 3.8 3s-1.7 3-3.8 3z" fill="currentColor" style="fill: var(--tblr-navbar-logo-color, var(--tblr-primary, #066fd1))"/></svg></a></div>
+          <nav class="collapse navbar-collapse app-sidebar-menu show" id="sidebar-menu" aria-label="Menu principal">
+            <ul class="navbar-nav pt-lg-3">
+              <li class="nav-section-title">Prestação de Contas</li>
+              <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-haspopup="true" aria-expanded="true"><span class="nav-link-icon" aria-hidden="true">▤</span><span class="nav-link-title">Prestação de Contas</span></a>
+                <div class="dropdown-menu show"><a class="dropdown-item" href="#termo-fomento">Termo Fomento</a><a class="dropdown-item" href="#termo-colaboracao">Termo de Colaboração</a><a class="dropdown-item" href="#acordo-cooperacao">Acordo de Cooperação</a></div>
+              </li>
+              <li class="nav-section-title mt-3">Organização</li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-haspopup="true" aria-expanded="false"><span class="nav-link-icon" aria-hidden="true">⌂</span><span class="nav-link-title">Organização</span></a>
+                <div class="dropdown-menu"><a class="dropdown-item" href="#dados-instituicao">Dados da Instituição</a><a class="dropdown-item" href="#usuario">Usuário</a><a class="dropdown-item" href="#permissao">Permissão</a></div>
+              </li>
+              <li class="nav-item sidebar-customize"><button type="button" class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-settings" aria-controls="offcanvas-settings"><span class="nav-link-icon" aria-hidden="true">⚙</span><span class="nav-link-title">Personalizar</span></button></li>
+            </ul>
+          </nav>
+          <div class="navbar-footer app-sidebar-footer"><ul class="navbar-nav"><li class="nav-item dropup"><a href="#" class="nav-link" data-bs-toggle="dropdown" aria-label="Abrir menu do usuário"><span class="avatar avatar-sm bg-primary-lt">A</span><span class="nav-link-title">Administrador<span class="small text-secondary d-block">Minha conta</span></span></a><div class="dropdown-menu"><a class="dropdown-item" href="#usuario">Perfil</a><a class="dropdown-item" href="#configuracoes">Configurações</a><a class="dropdown-item" href="#logout" data-demo-logout>Sair</a></div></li></ul></div>
+        </div>
+      </aside>
+      <div class="page-wrapper">
+        <div class="page-header d-print-none"><div class="container-xl"><div class="row g-2 align-items-center"><div class="col"><div class="page-pretitle">Início</div><h2 class="page-title">Visão geral</h2></div><div class="col-auto ms-auto d-print-none"><button id="refresh-button" class="btn btn-primary"><span class="me-2" aria-hidden="true">↻</span>Atualizar painel</button></div></div></div></div>
+        <div class="page-body"><div class="container-xl">
+          <div class="row row-deck row-cards">
+            <div class="col-12"><div class="card welcome-card"><div class="card-body"><div class="row align-items-center"><div class="col"><div class="text-secondary mb-2">ESTRUTURA PRONTA PARA COMEÇAR</div><h3 class="welcome-title">Seu próximo projeto começa aqui.</h3><div class="text-secondary">Base Vite + TypeScript com os estilos e componentes Tabler disponíveis.</div></div><div class="col-auto d-none d-md-block"><div class="welcome-mark" aria-hidden="true">T</div></div></div></div></div></div>
+            <div class="col-sm-6 col-lg-4"><div class="card"><div class="card-body"><div class="subheader">Projetos</div><div class="d-flex align-items-baseline"><div class="h1 mb-0 me-2">12</div><div class="text-success">+2 este mês</div></div><div class="progress progress-sm mt-3"><div class="progress-bar bg-primary" style="width: 65%" role="progressbar" aria-label="Progresso de projetos" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div></div></div></div></div>
+            <div class="col-sm-6 col-lg-4"><div class="card"><div class="card-body"><div class="subheader">Tarefas concluídas</div><div class="d-flex align-items-baseline"><div class="h1 mb-0 me-2">84%</div><div class="text-success">+8%</div></div><div class="text-secondary mt-3">Bom trabalho — o progresso está no caminho certo.</div></div></div></div>
+            <div class="col-sm-6 col-lg-4"><div class="card"><div class="card-body"><div class="subheader">Status do ambiente</div><div class="d-flex align-items-center mt-2"><span class="status-dot status-dot-animated status-green me-2"></span><span class="fw-medium">Pronto para desenvolvimento</span></div><div class="text-secondary mt-3">Vite com recarga rápida ativada.</div></div></div></div>
+            <div class="col-12"><div class="card" id="relatorios"><div class="card-header"><h3 class="card-title">Comece a desenvolver</h3></div><div class="card-body"><p class="text-secondary mb-3">Edite a tela inicial em <span class="font-monospace">src/main.ts</span> e personalize o visual em <span class="font-monospace">src/app.css</span>. Os exemplos HTML originais continuam disponíveis na pasta <span class="font-monospace">../base</span>.</p><div class="d-flex flex-wrap gap-2"><span class="badge bg-blue-lt">Tabler UI</span><span class="badge bg-purple-lt">TypeScript</span><span class="badge bg-green-lt">Vite</span></div></div></div></div>
+          </div>
+        </div></div>
+        <footer class="footer footer-transparent d-print-none"><div class="container-xl"><div class="text-center text-secondary">Projeto inicial · Vite + Tabler</div></div></footer>
+      </div>
+    </div>
+    ${h()}
+  `}function _(){let e={theme:`auto`,"theme-base":`neutral`,"theme-font":`sans-serif`,"theme-primary":`blue`,"theme-radius":`1`,layout:`default`,navbar:`default`,"navbar-position":`horizontal`,"navbar-style":`default`,"navbar-theme":`default`,"offcanvas-style":`default`,sidebar:`default`},t={auto:{theme:`auto`,"navbar-theme":`default`},light:{theme:`light`,"navbar-theme":`default`},dark:{theme:`dark`,"navbar-theme":`default`},"dark-nav":{theme:`light`,"navbar-theme":`dark`},colored:{theme:`light`,"navbar-theme":`primary`}},n=document.querySelector(`#offcanvas-settings`),r=new URL(window.location.href);function a(t){return localStorage.getItem(`tabler-${t}`)??(t===`theme`?null:document.documentElement.getAttribute(`data-bs-${t}`))??e[t]}function s(t,n){let i=t===`theme`&&n===`auto`?window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`:n;i===e[t]?document.documentElement.removeAttribute(`data-bs-${t}`):document.documentElement.setAttribute(`data-bs-${t}`,i),localStorage.setItem(`tabler-${t}`,n),n===e[t]?r.searchParams.delete(t):r.searchParams.set(t,n)}function c(){Object.keys(e).forEach(e=>{n.querySelectorAll(`input[name="${e}"]`).forEach(t=>{t.checked=t.value===a(e)})});let r=Object.entries(t).find(([,e])=>Object.entries(e).every(([e,t])=>a(e)===t))?.[0]??`auto`;n.querySelectorAll(`input[name="scheme"]`).forEach(e=>{e.checked=e.value===r});let i=a(`navbar-position`),o=i===`vertical`||i===`hybrid`,s=i===`horizontal`||i===`hybrid`;n.querySelector(`[data-theme-setting="sidebar"]`).hidden=!o,n.querySelectorAll(`[data-theme-setting="navbar"], [data-theme-setting="navbar-style"], [data-theme-setting="navbar-theme"]`).forEach(e=>{e.hidden=!s});let c=document.querySelector(`#app > .page`);c.dataset.navigationMode=i,c.dataset.sidebarMode=a(`sidebar`);let l=document.querySelector(`#app-sidebar`);l.hidden=!o,l.dataset.sidebarMode=a(`sidebar`);let u=document.querySelector(`.app-header`);u.hidden=i===`vertical`,u.dataset.navigationMode=i,u.classList.toggle(`sticky-top`,a(`navbar`)===`sticky`),u.classList.toggle(`navbar-floating`,a(`navbar-style`)===`floating`),u.classList.toggle(`navbar-dark`,a(`navbar-theme`)===`dark`),u.classList.toggle(`bg-primary`,a(`navbar-theme`)===`primary`)}n.addEventListener(`change`,n=>{let i=n.target;if(i instanceof HTMLInputElement&&i.type===`radio`){if(i.name===`scheme`){let e=t[i.value];Object.entries(e).forEach(([e,t])=>s(e,t))}else i.name in e&&s(i.name,i.value);c(),window.history.replaceState({},``,r),window.dispatchEvent(new Event(`resize`))}}),document.querySelector(`#reset-theme-settings`)?.addEventListener(`click`,()=>{Object.entries(e).forEach(([t,n])=>{localStorage.removeItem(`tabler-${t}`),r.searchParams.delete(t);let i=t===`theme`&&n===`auto`?window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`:n;i===e[t]?document.documentElement.removeAttribute(`data-bs-${t}`):document.documentElement.setAttribute(`data-bs-${t}`,i)}),c(),window.history.replaceState({},``,r),window.dispatchEvent(new Event(`resize`))});let l=document.querySelector(`#refresh-button`);l?.addEventListener(`click`,()=>{l.disabled=!0,l.textContent=`Painel atualizado`,window.setTimeout(()=>{l.disabled=!1,l.innerHTML=`<span class="me-2" aria-hidden="true">↻</span>Atualizar painel`},1200)}),document.querySelectorAll(`#demo-logout, [data-demo-logout]`).forEach(e=>{e.addEventListener(`click`,async e=>{e.preventDefault();try{await o()}catch{}finally{i(),window.location.reload()}})}),c()}s.innerHTML=`
+  <main class="login-page">
+    <div class="login-container">
+      <header class="login-brand">
+        <a class="login-brand-link" href="/" aria-label="Portal de Prestação de Contas">
+          <span class="login-brand-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 10 9-7 9 7" />
+              <path d="M4 10h16M5 10v10m4-10v10m6-10v10m4-10v10M3 20h18M2 22h20" />
+            </svg>
+          </span>
+          <span class="login-brand-name">Portal de Prestação de Contas</span>
+        </a>
+      </header>
+
+      <section class="card card-md login-card" aria-labelledby="login-title">
+        <div class="card-body">
+          <div class="login-heading">
+            <h1 class="h2 mb-2" id="login-title">Acesse sua conta</h1>
+            <p class="text-secondary">Entre para continuar no portal.</p>
+          </div>
+
+          <form id="login-form">
+            <div class="mb-3">
+              <label class="form-label" for="login-email">E-mail</label>
+              <input class="form-control" type="email" id="login-email" name="email" placeholder="voce@exemplo.com" autocomplete="username" required>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex align-items-center">
+                <label class="form-label" for="login-password">Senha</label>
+                <button class="login-recovery ms-auto" type="button" data-login-notice="A recuperação de senha ainda não está disponível.">Esqueci minha senha</button>
+              </div>
+              <div class="input-group input-group-flat">
+                <input class="form-control" type="password" id="login-password" name="password" placeholder="Sua senha" autocomplete="current-password" required>
+                <span class="input-group-text">
+                  <button class="login-password-toggle" type="button" aria-label="Mostrar senha" aria-pressed="false" aria-controls="login-password">
+                    <svg class="login-eye-show" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <svg class="login-eye-hide" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8" />
+                      <path d="M9.9 5.2A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.9M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10 10 0 0 0 4-.8" />
+                    </svg>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <label class="form-check login-remember">
+              <input class="form-check-input" type="checkbox" name="remember">
+              <span class="form-check-label">Lembrar neste dispositivo</span>
+            </label>
+
+            <div class="login-feedback" id="login-feedback" role="status" aria-live="polite" hidden></div>
+            <div class="form-footer">
+              <button class="btn btn-primary w-100" type="submit">Entrar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      
+
+      <p class="login-footnote">Acesso exclusivo para usuários autorizados.</p>
+    </div>
+  </main>
+`;var v=document.querySelector(`#login-password`),y=document.querySelector(`.login-password-toggle`);y.addEventListener(`click`,()=>{let e=v.type===`password`;v.type=e?`text`:`password`,y.setAttribute(`aria-pressed`,String(e)),y.setAttribute(`aria-label`,e?`Ocultar senha`:`Mostrar senha`)});var b=document.querySelector(`#login-feedback`),x=document.querySelector(`#login-form`);x.addEventListener(`submit`,async e=>{e.preventDefault();let t=new FormData(x),n=String(t.get(`email`)??``),i=String(t.get(`password`)??``);b.textContent=`Autenticando...`,b.hidden=!1;try{r((await a(n,i)).data.token),document.title=`Painel principal | Portal de Prestação de Contas`,s.innerHTML=g(),_()}catch(e){b.textContent=e instanceof Error&&e.message?e.message:`O serviço de autenticação ainda não está conectado.`,b.hidden=!1}}),document.querySelector(`[data-login-notice]`).addEventListener(`click`,e=>{e.currentTarget instanceof HTMLButtonElement&&(b.textContent=e.currentTarget.dataset.loginNotice??``,b.hidden=!1)});
