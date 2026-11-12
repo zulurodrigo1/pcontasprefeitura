@@ -2,6 +2,8 @@
 
 Esta configuração sobe o frontend Vite, a API Laravel com PHP 8.4-FPM e Nginx, e PostgreSQL. O PHP 8.4 é necessário para as versões atualmente registradas em `composer.lock` e está dentro do requisito PHP 8.3+ do guia do cliente. Esta configuração é voltada ao desenvolvimento local; não use as credenciais padrão em produção.
 
+O nome do projeto Compose é `smds-contas`. Os containers são `smds-contas-api`, `smds-contas-web`, `smds-contas-db` e `smds-contas-frontend`; as imagens locais são `smds_api`, `smds_web`, `smds_db` e `smds_frontend`.
+
 ## Requisitos
 
 - Docker Desktop com Docker Compose v2.
@@ -58,4 +60,6 @@ O Laravel se conecta ao PostgreSQL pelo hostname interno `database`; não use `l
 - `compose.yaml`: serviços, redes, portas e volumes.
 - `php/Dockerfile`: PHP 8.4-FPM, extensões PostgreSQL e Composer.
 - `php/entrypoint.sh`: prepara dependências e chave de aplicação para desenvolvimento.
-- `nginx/default.conf`: encaminha requisições HTTP ao PHP-FPM.
+- `nginx/Dockerfile` e `nginx/default.conf`: encaminham requisições HTTP ao PHP-FPM.
+- `db/Dockerfile`: imagem local baseada no PostgreSQL 16.
+- `frontend/Dockerfile`: imagem local baseada no Node.js 22.
