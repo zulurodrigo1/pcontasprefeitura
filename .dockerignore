@@ -1,0 +1,14 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+!api/.env.example
+**/node_modules
+**/vendor
+**/dist
+**/.phpunit.cache
+api/storage/logs/*.log
+api/bootstrap/cache/*.php
+frontend/.vite
+docker/.env
