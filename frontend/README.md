@@ -17,7 +17,8 @@ Estrutura inicial de front-end baseada no template Tabler da pasta `../base`, co
 
 - `src/main.ts`: markup e comportamento inicial da aplicação.
 - `src/app.css`: estilos específicos do projeto.
-- `public/tabler/`: CSS, JavaScript e recursos estáticos copiados do template `../base`.
+- `public/css/`: folhas de estilo do Tabler copiadas de `../base/dist/css` e servidas em `/css/`.
+- `public/tabler/`: recursos estáticos do Tabler.
 - `../base/`: páginas e arquivos de referência originais do Tabler.
 
-As dependências de UI do Tabler já estão servidas localmente; o build inclui os arquivos de `public/` automaticamente.
+O Vite copia os arquivos de `public/` para o build.
