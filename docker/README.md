@@ -6,13 +6,13 @@ O nome do projeto Compose é `smds-contas`. Os containers são `smds-contas-api`
 
 ## Requisitos
 
-- Docker Desktop com Docker Compose v2.
+- Docker Engine e Docker Compose v2 (plugin `docker compose`). No Linux, o usuário precisa ter permissão para acessar o daemon Docker.
 
 ## Iniciar
 
 Na raiz do repositório:
 
-```powershell
+```sh
 docker compose -f docker/compose.yaml up --build
 ```
 
@@ -29,7 +29,7 @@ O banco fica em um volume nomeado e persiste após parar os containers.
 
 Em outro terminal, na raiz do repositório:
 
-```powershell
+```sh
 docker compose -f docker/compose.yaml exec app php artisan migrate
 docker compose -f docker/compose.yaml exec app php artisan db:seed --class=UserSeeder
 ```
@@ -38,7 +38,7 @@ O usuário local de demonstração criado pelo seeder é `demo@prefeitura.gov.br
 
 ## Parar
 
-```powershell
+```sh
 docker compose -f docker/compose.yaml down
 ```
 
@@ -52,6 +52,8 @@ As portas e credenciais locais podem ser sobrescritas por variáveis de ambiente
 - `FRONTEND_PORT` (padrão `5173`)
 - `DB_FORWARD_PORT` (padrão `5433`)
 - `DB_DATABASE`, `DB_USERNAME` e `DB_PASSWORD`
+
+As portas publicadas ficam vinculadas a `127.0.0.1`, portanto os serviços não são expostos à rede local. A API, o CORS e o Sanctum acompanham as portas configuradas para frontend e API. Para usar outras portas, exporte as variáveis no shell antes de executar o Compose.
 
 O Laravel se conecta ao PostgreSQL pelo hostname interno `database`; não use `localhost` na configuração do banco dentro dos containers. Para produção, configure credenciais fortes e a rede do Nginx Proxy Manager, mantenha o banco privado e valide os proxies confiáveis e os cabeçalhos encaminhados pelo proxy.
 
